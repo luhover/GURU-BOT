@@ -1,82 +1,137 @@
-import { watchFile, unwatchFile } from 'fs'
-import chalk from 'chalk'
-import { fileURLToPath } from 'url'
-import fs from 'fs'
-import fetch from 'node-fetch'
-import axios from 'axios'
+const fs = require('fs-extra')
+if (fs.existsSync('.env')) require('dotenv').config({ path: __dirname+'/.env' })
 
 
-global.owner = [
-  ['917605902011', 'GURU', true],
-  ['6281255369012', 'Ash', true], 
-  [''] 
-] //Number of owners
+//═══════[Required Variables]════════\\
+global.audio= "" ;  
+global.video= "" ;
+global.port =process.env.PORT
+global.appUrl=process.env.APP_URL || ""                       // put your app url here,
+global.email ="hassanluhovero44@gmail.com"
+global.location="Tanzania."
+global.mongodb= process.env.MONGODB_URI || ""
+global.allowJids= process.env.ALLOW_JID || "null" 
+global.blockJids= process.env.BLOCK_JID || "120363023983262391@g.us"
+global.DATABASE_URI = process.env.DATABASE_URL || ""
 
-//global.pairingNumber = "" //put your bot number here
-
-global.mods = ['917605902011','32460248586'] 
-global.prems = ['917605902011', '32460248586', '919398758484']
-global.allowed = ['917605902011', '32460248586', '19152999993']
-global.keysZens = ['c2459db922', '37CC845916', '6fb0eff124']
-global.keysxxx = keysZens[Math.floor(keysZens.length * Math.random())]
-global.keysxteammm = ['29d4b59a4aa687ca', '5LTV57azwaid7dXfz5fzJu', 'cb15ed422c71a2fb', '5bd33b276d41d6b4', 'HIRO', 'kurrxd09', 'ebb6251cc00f9c63']
-global.keysxteam = keysxteammm[Math.floor(keysxteammm.length * Math.random())]
-global.keysneoxrrr = ['5VC9rvNx', 'cfALv5']
-global.keysneoxr = keysneoxrrr[Math.floor(keysneoxrrr.length * Math.random())]
-global.lolkeysapi = ['GataDios']
-
-global.APIs = { // API Prefix
-  // name: 'https://website'
-  xteam: 'https://api.xteam.xyz', 
-  dzx: 'https://api.dhamzxploit.my.id',
-  lol: 'https://api.lolhuman.xyz',
-  violetics: 'https://violetics.pw',
-  neoxr: 'https://api.neoxr.my.id',
-  zenzapis: 'https://zenzapis.xyz',
-  akuari: 'https://api.akuari.my.id',
-  akuari2: 'https://apimu.my.id',
-  nrtm: 'https://fg-nrtm.ddns.net',
-  bg: 'http://bochil.ddns.net',
-  fgmods: 'https://api-fgmods.ddns.net'
-}
-global.APIKeys = { // APIKey Here
-  // 'https://website': 'apikey'
-  'https://api.xteam.xyz': 'd90a9e986e18778b',
-  'https://api.lolhuman.xyz': '85faf717d0545d14074659ad',
-  'https://api.neoxr.my.id': `${keysneoxr}`,	
-  'https://violetics.pw': 'beta',
-  'https://zenzapis.xyz': `${keysxxx}`, 
-  'https://api-fgmods.ddns.net': 'fg-dylux'
-}
-
-// Sticker WM
-global.botname = 'ᴛʜᴇ ɢᴜʀᴜ-ʙᴏᴛ'
-global.premium = 'true'
-global.packname = 'GURU┃ᴮᴼᵀ' 
-global.author = '@Asliguru' 
-global.menuvid = 'https://i.imgur.com/AjDzGgG.mp4'
-global.igfg = '▢ Follow on Instagram\nhttps://www.instagram.com/asli_guru69\n' 
-global.dygp = 'https://chat.whatsapp.com/BFfD1C0mTDDDfVdKPkxRAA'
-global.fgsc = 'https://github.com/Guru322/GURU-BOT' 
-global.fgyt = 'https://youtube.com/@Asliguru'
-global.fgpyp = 'https://youtube.com/@Asliguru'
-global.fglog = 'https://raw.githubusercontent.com/Guru322/api/Guru/guru.jpg' 
-global.thumb = fs.readFileSync('./Assets/Gurulogo.jpg')
+global.timezone= process.env.TZ || process.env.TIME_ZONE || "Asia/Karachi";
+global.github=process.env.GITHUB|| "https://github.com/SuhailTechInfo/Suhail-Md";
+global.gurl  =process.env.GURL  || "https://whatsapp.com/channel/0029Va9thusJP20yWxQ6N643";
+global.website=process.env.GURL || "https://whatsapp.com/channel/0029Va9thusJP20yWxQ6N643" ; 
+global.THUMB_IMAGE = process.env.THUMB_IMAGE || process.env.IMAGE || "https://telegra.ph/file/d5b1c3544fedc23e11a06.jpg" ; // SET LOGO FOR IMAGE 
 
 
-global.wait = '*⌛ _Charging..._*\n*▰▰▰▱▱▱▱▱*'
-global.rwait = '⌛'
-global.dmoji = '🤭'
-global.done = '✅'
-global.error = '❌' 
-global.xmoji = '🔥' 
 
-global.multiplier = 69 
-global.maxwarn = '3' 
+global.devs = "255683535422" // Developer Contact
+global.sudo = process.env.SUDO ? process.env.SUDO.replace(/[\s+]/g, '') : "null";
+global.owner= process.env.OWNER_NUMBER ? process.env.OWNER_NUMBER.replace(/[\s+]/g, '') : "923184474176";
 
-let file = fileURLToPath(import.meta.url)
-watchFile(file, () => {
-  unwatchFile(file)
-  console.log(chalk.redBright("Update 'config.js'"))
-  import(`${file}?update=${Date.now()}`)
-})
+
+
+
+//========================= [ BOT SETTINGS ] =========================\\
+global.style = process.env.STYLE   || '5',  // put '1' to "5" here to check bot styles
+global.flush = process.env.FLUSH   || "false"; // Make it "true" if bot not responed
+global.gdbye = process.env.GOODBYE || "false"; 
+global.wlcm  = process.env.WELCOME || "false";  // Make it "false" for disable WELCOME 
+
+global.warncount = process.env.WARN_COUNT || 3,
+global.disablepm = process.env.DISABLE_PM || "false",
+global.MsgsInLog = process.env.MSGS_IN_LOG|| "false", // "true"  to see messages , "log" to open logs , "false" to hide logs messages
+global.userImages= process.env.USER_IMAGES|| "text",
+global.waPresence= process.env.WAPRESENCE ||  "set according to your need" ; // 'unavailable' | 'available' | 'composing' | 'recording' | 'paused'
+
+
+//========================= [ AUTO READ MSGS & CMDS ] =========================\\
+global.readcmds = process.env.READ_COMMAND || "true"
+global.readmessage = process.env.READ_MESSAGE || "true"
+global.readmessagefrom = process.env.READ_MESSAGE_FROM || "null,923xxxxxxxx";
+
+
+//========================= [ AUTO SAVE & READ STATUS ] =========================\\
+global.read_status = process.env.AUTO_READ_STATUS || "true"
+global.save_status = process.env.AUTO_SAVE_STATUS || "false"
+global.save_status_from =  process.env.SAVE_STATUS_FROM  || "null,923xxxxxxxx";
+global.read_status_from =  process.env.READ_STATUS_FROM  ||  "923184474176,923xxxxxxxx";
+
+global.api_smd = "https://api-smd-1.vercel.app"
+global.scan = "https://suhail-md-vtsf.onrender.com/";
+
+module.exports = {
+
+  menu: process.env.MENU || "", /**  Available @MENU @Schemes 1: Aztec_Md, 2: A17_Md, 3: Suhail-Md Default ---------- If Not Choose then it Randomely Pic One Of Them Each time **/
+
+  HANDLERS: process.env.PREFIX  || ".",
+  BRANCH  : process.env.BRANCH  || "main",
+  VERSION : process.env.VERSION || "V.1.2.8",
+  caption : process.env.CAPTION || "©sᴜʜᴀɪʟ²²¹-ᴍᴅ" , // ```『 ᴘᴏᴡᴇʀᴇᴅ ʙʏ sᴜʜᴀɪʟ²²¹-ᴍᴅ 』```", //*『sᴜʙsᴄʀɪʙᴇ • sᴜʜᴀɪʟ ᴛᴇᴄʜ』*\n youtube.com/@suhailtechinfo0"),
+ 
+  author : process.env.PACK_AUTHER|| "Suhail-MD",
+  packname: process.env.PACK_NAME || "♥️",
+  botname : process.env.BOT_NAME  || "sᴜʜᴀɪʟ-ᴍᴅ",
+  ownername:process.env.OWNER_NAME|| "It'x Suhail",
+
+  sessionName:process.env.SESSION_ID || "",  // PUT SESSION ID HERE 
+  errorChat : process.env.ERROR_CHAT || "",
+  KOYEB_API : process.env.KOYEB_API  || "false",
+
+  REMOVE_BG_KEY : process.env.REMOVE_BG_KEY  || "",
+  OPENAI_API_KEY: process.env.OPENAI_API_KEY || "",
+  HEROKU_API_KEY: process.env.HEROKU_API_KEY || "",
+  HEROKU_APP_NAME:process.env.HEROKU_APP_NAME|| "",
+  antilink_values:process.env.ANTILINK_VALUES|| "all",
+  HEROKU: process.env.HEROKU_APP_NAME && process.env.HEROKU_API_KEY,
+
+  aitts_Voice_Id : process.env.AITTS_ID || "37",
+  ELEVENLAB_API_KEY: process.env.ELEVENLAB_API_KEY || "",
+  WORKTYPE: process.env.WORKTYPE||process.env.MODE || "private",
+  LANG: process.env.THEME ? process.env.THEME.toUpperCase() : "SUHAIL",
+
+
+
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+global.isMongodb = false; 
+let file = require.resolve(__filename)
+fs.watchFile(file, () => { fs.unwatchFile(file);console.log(`Update'${__filename}'`);delete require.cache[file];	require(file); })
+ 
+
+// ========================= [ Disables in V.1.2.8 ] ===============================\\  
+  //style : process.env.STYLE || "2",  // put '1' & "2" here to check bot styles
+  //readmessage:process.env.READ_MESSAGE|| "false",
+  //warncount: process.env.WARN_COUNT || 3,
+  //userImages:process.env.USER_IMAGES|| "text",  // SET IMAGE AND VIDEO URL FOR BOT MENUS 
+  //disablepm: process.env.DISABLE_PM || "false",
+  //MsgsInLog: process.env.MSGS_IN_LOG|| "false", // "true"  to see messages , "log" to open logs , "false" to hide logs messages
+  //readcmds:process.env.READ_COMMANDS|| "false", 
+  //alwaysonline:process.env.WAPRESENCE|| "unavailable", // 'unavailable' | 'online' | 'composing' | 'recording' | 'paused'
+  //read_status: process.env.AUTO_READ_STATUS || "false",
+  //save_status: process.env.AUTO_SAVE_STATUS || "false",
+ 
