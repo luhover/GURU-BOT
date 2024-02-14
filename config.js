@@ -7,7 +7,7 @@ import axios from 'axios'
 
 
 global.owner = [
-  ['255622801905', 'POWER VPN UNLIMITED', true],
+  ['255683535422', 'POWER VPN UNLIMITED', true],
   ['255622801905', 'POWER VPN UNLIMITED', true], 
   [''] 
 ] //Number of owners
